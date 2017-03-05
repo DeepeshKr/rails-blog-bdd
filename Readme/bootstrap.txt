@@ -1,0 +1,16 @@
+Add Bootstrap
+In the Gemfile add the following gems:
+gem 'bootstrap-sass', '~>3.3.6'
+gem 'autoprefixer-rails', '~>6.3.7'
+
+Run: 
+bundle install
+
+Go the the stylesheets folder under the assets folder and create a new file called 
+custom.css.scss and add the following to it:
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+Also add the following to the application.js file in the assets/javascript folder under the line that says require jquery_ujs:
+
+//= require bootstrap-sprockets
