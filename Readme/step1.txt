@@ -1,0 +1,44 @@
+
+
+Create Article Feature Test -
+
+Create a topic branch:
+git checkout -b article-feature-success
+
+Create a folder called features under spec directory:
+mkdir spec/features
+
+In that folder create a new file called creating_article_spec.rb: 
+Open that file and add the following:
+
+require "rails_helper"
+RSpec.feature "Creating Articles" do 
+scenario "A user creates a new article" do
+visit "/"
+click_link "New Article"
+fill_in "Title", with: "Creating a blog" 
+fill_in "Body", with: "Lorem Ipsum" 
+click_button "Create Article"
+expect(page).to have_content("Article has been created")
+expect(page.current_path).to eq(articles_path) 
+end
+end
+
+Now save the file type this to run the spec (or you can just type rspec to run all specs):
+rspec spec/features/creating_article_spec.rb
+
+You get a routing error that suggests to create a root path
+Update the routes.rb file in the config folder like below:
+root to: "articles#index"
+
+Now save and run rspec spec/features/creating_article_spec.rb
+again.
+You get an error that says: Uninitialized constant ArticlesController. This suggests to create the Articles Controller
+
+Generate an articles controller with an index action by issuing the following command:
+rails g controller articles index
+
+Remove the get 'articles/index' line from the routes.rb file
+
+Save￼ and run rspec again. 
+The next error message suggests to add the "New Article" link 
