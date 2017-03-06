@@ -1,0 +1,7 @@
+<article class="detail-article">
+	<h1 class="display-1"><%= @article.title%></h1>
+	
+	<p class="lead"><%= @article.created_at.strftime("%d-%b-%y")%></p>
+	
+	<p><%= @article.body %></p>
+</article>

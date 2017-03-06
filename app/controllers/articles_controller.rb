@@ -1,10 +1,11 @@
 class ArticlesController < ApplicationController
+  
   def index
     @articles = Article.all
   end
   
   def show
-    @article = Article.find(param(id))
+    @article = Article.find params[:id]
   end
   def new 
     @article = Article.new
@@ -20,6 +21,14 @@ class ArticlesController < ApplicationController
       flash.now[:danger] = "Article has not been created"
       render :new
     end
+  end
+  
+  protected
+  
+  def resource_not_found
+    message = "The article you are looking for could not be found"
+    flash[:alert] = message
+    redirect_to root_path
   end
   
   private
