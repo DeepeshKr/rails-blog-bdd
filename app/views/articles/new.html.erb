@@ -4,15 +4,19 @@
   <div class="col-md-12">
     <%= form_for(@article, :html => {class: "form-horizontal", role: "form"}) do |f| %>
 	<% if @article.errors.any? %>
-	<div class="card card-inverse card-danger">
-	  <div class="card-block">
-		  <h4 class="card-title">
-			  <%= pluralize(@article.errors.count, "errors")%> has prevented this from getting saved:
-		  </h4>
-			<% @article.errors.full_messages.each do |message| %>
-				<p class="card-text"><%= message %></p>
-			<% end %>
-	  </div>
+	<div class="row">
+	<div class="col-md-offset-1 col-md-11">
+		<div class="card card-inverse card-danger">
+		  <div class="card-block">
+			  <h4 class="card-title">
+				  <%= pluralize(@article.errors.count, "errors")%> has prevented this from getting saved:
+			  </h4>
+				<% @article.errors.full_messages.each do |message| %>
+					<p class="card-text"><%= message %></p>
+				<% end %>
+		  </div>
+		</div>
+	</div>
 	</div>
 	<% end %>
 	
