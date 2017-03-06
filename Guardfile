@@ -69,7 +69,11 @@ guard :rspec, cmd: "bundle exec rspec" do
   rails = dsl.rails(view_extensions: %w(erb haml slim))
   dsl.watch_spec_files_for(rails.app_files)
   dsl.watch_spec_files_for(rails.views)
-
+  
+  # add these lines below to include your custom folder in rspec (here spec/features)
+  watch(%r{^app/controllers/(.+)_(controller)\.rb$})  { "spec/features" }
+  watch(%r{^app/models/(.+)\.rb$})  { "spec/features" }
+  # custom folder end
   watch(rails.controllers) do |m|
     [
       rspec.spec.call("routing/#{m[1]}_routing"),
@@ -84,7 +88,9 @@ guard :rspec, cmd: "bundle exec rspec" do
   watch(rails.app_controller)  { "#{rspec.spec_dir}/controllers" }
 
   # Capybara features specs
-  watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
+  watch(rails.view_dirs)     { "spec/features" }
+  ## old file below commented, new above for capybara 
+  # watch(rails.view_dirs)     { |m| rspec.spec.call("features/#{m[1]}") }
   watch(rails.layouts)       { |m| rspec.spec.call("features/#{m[1]}") }
 
   # Turnip features and steps
