@@ -1,21 +1,26 @@
-<h1>Articles</h1>
+<div class="row">
+	<div class="col-md-6">
+		<h1>My Blog</h1>
+	</div>
+	<div class="col-md-offset-1 col-md-5">
+		<%= link_to 'New Article', new_article_path, class:"btn btn-primary btn-lg", id:"new-article-button" %>
+		
+	</div>
+</div>
+<% if @articles.empty? %>
+	<h1 id="no-articles">No Articles Found<h1>
+<% else %>
 
-<table class="table table-hover">
-  <tr>
-    <th>Title</th>
-    <th>Description</th>
-  </tr>
   <% @articles.each do |article| %>
-  <tr>
-    <td>
-      <%= article.title %>
-    </td>
-    <td>
-      <%= article.body %>
-    </td>
-  </tr>
+  <div class="card">
+    <div class="card-block">
+      <h4 class="card-title"><%= link_to article.title, article_path(article) %></h4>
+      <h6 class="card-subtitle mb-2 text-muted">Created: <%= article.created_at.strftime("%d-%b-%y %H:%M %P")%></h6>
+      <p class="card-text"><%= truncate(article.body, length: 500) %></p>
+      <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>
+    </div>
+  </div>
   <% end %>
   
-</table>
-
-<%= link_to 'New Article', new_article_path %>
+<% end %>
