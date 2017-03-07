@@ -45,3 +45,40 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# # Change to match your CPU core count  nproc
+# workers 1
+#
+# # Min and Max threads per worker
+# threads 8, 32
+#
+# # pre load application
+# preload_app!
+#
+# app_dir = File.expand_path('../..', __FILE__)
+# shared_dir = "#{app_dir}/shared"
+#
+# # Default to production
+# rails_env = ENV['RAILS_ENV'] || 'production'
+# environment rails_env
+#
+# # Logging
+# stdout_redirect "#{shared_dir}/log/puma.stdout.log", "#{shared_dir}/log/puma.stderr.log", true
+#
+# # Set master PID and state locations
+# pidfile "#{shared_dir}/pids/puma.pid"
+# state_path "#{shared_dir}/pids/puma.state"
+# activate_control_app
+#
+# # Set up socket location
+# bind "unix://#{shared_dir}/sockets/puma.sock"
+#
+# on_worker_boot do
+#     require 'active_record'
+#     begin
+#         ActiveRecord::Base.connection.disconnect!
+#     rescue
+#         ActiveRecord::ConnectionNotEstablished
+#     end
+#     ActiveRecord::Base.establish_connection(YAML.load_file("#{app_dir}/config/database.yml")[rails_env])
+# end

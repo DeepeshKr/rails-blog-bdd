@@ -1,0 +1,25 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <%= link_to "Blog App", root_path, class: "navbar-brand" %> 
+  
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	 <ul class="navbar-nav mx-auto w-100">
+	  <li class="nav-item"><%= link_to "Authors", "#", class:"nav-link" %></li>
+	</ul>
+
+	<ul class="nav navbar-nav ml-auto w-100 justify-content-end">
+	<% if user_signed_in? %>
+		<p class="navbar-text">Signed in as <%= current_user.email %></p>
+		<li class="nav-item"><%= link_to "Sign Out", destroy_user_session_path, method: :delete, class:"nav-link" %></li>
+	<% else %>
+		<li class="nav-item"><%= link_to "Sign in", new_user_session_path, class:"nav-link" %></li>
+  		<li class="nav-item"><%= link_to "Sign Up", new_user_registration_path, class:"nav-link" %></li>
+  	<% end %>
+    
+    </ul>
+  </div>
+  
+  
+</nav>

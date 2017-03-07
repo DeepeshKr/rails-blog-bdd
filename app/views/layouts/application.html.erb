@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BlogApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "My Blog" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "My Blog" %>">
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+	</head>
   <body>
 	<header role="banner">
-	  	<%= render 'layouts/header' %>
+	  	<%= render 'layouts/navigation' %>
 	</header>
 	<div class="container">
 		<div class="row">
