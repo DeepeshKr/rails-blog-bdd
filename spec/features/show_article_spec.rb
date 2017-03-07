@@ -17,6 +17,5 @@ RSpec.feature "Show article" do
     expect(current_path).to eq(article_path(@article))
     
   end
-
   
 end

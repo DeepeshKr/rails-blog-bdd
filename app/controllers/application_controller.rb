@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
 
   protected
     def resource_not_found 
-      # use this in controller by called helpers
+      # use this in controller 
     end
 end
