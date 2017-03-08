@@ -9,7 +9,7 @@ RSpec.feature "Listing Articles" do
     @article2 = Article.create(title: "new title", body: "New article body 2", user: @john)
   end
   
-  scenario "List all article" do
+  scenario "with arcticles created and user not signed in all article" do
     #check if the articles are listed
     visit "/"
     
@@ -21,8 +21,26 @@ RSpec.feature "Listing Articles" do
     expect(page).to have_content(@article2.title)
     expect(page).to have_content(@article2.body)
     expect(page).to have_link(@article2.title)
-    
+    expect(page).not_to have_link("New Article")
   end
+  
+  scenario "with arcticles created and user signed in all article" do
+    #check if the articles are listed
+    login_as(@john)
+    visit "/"
+    
+    #expect both articles and body are present
+    expect(page).to have_content(@article1.title)
+    expect(page).to have_content(@article1.body)
+    expect(page).to have_link(@article1.title)
+    
+    expect(page).to have_content(@article2.title)
+    expect(page).to have_content(@article2.body)
+    expect(page).to have_link(@article2.title)
+    expect(page).to have_link("New Article")
+  end
+  
+  
   
   scenario "User has no articles" do
     Article.delete_all
