@@ -17,6 +17,9 @@
       <h4 class="card-title"><%= link_to article.title, article_path(article) %></h4>
       <h6 class="card-subtitle mb-2 text-muted">Created: <%= article.created_at.strftime("%d-%b-%y %H:%M %P")%></h6>
       <p class="card-text"><%= truncate(article.body, length: 500) %></p>
+	  <div class="author">
+		  <small>Created by <%= article.user.email %></small> 
+	  </div>
       <a href="#" class="card-link">Card link</a>
       <a href="#" class="card-link">Another link</a>
     </div>

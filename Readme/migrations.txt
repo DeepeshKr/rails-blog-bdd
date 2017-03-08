@@ -1,0 +1,1 @@
+rails g migration add_user_to_articles user:reference
