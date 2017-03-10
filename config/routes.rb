@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   resources :articles do
     resource :comments
   end
+  
+  mount ActionCable.server => '/cable'
 end

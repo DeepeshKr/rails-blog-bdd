@@ -4,7 +4,7 @@
 	</header>
 	<div class="col-md-10">
 		<% if @article.comments.any? %>
-		
+			<div id="messages">
 			<% persisted_comments(@comments).each do |comment| %> 
 				<div class="comment-body">
 					<%= comment.body %> 
@@ -14,6 +14,7 @@
 				</div>
 				<hr>
 			<% end %>
+			</div>
 		<% else %>
 			There are no comments to show.
 		<% end %> 

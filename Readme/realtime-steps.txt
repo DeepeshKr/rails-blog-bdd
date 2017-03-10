@@ -1,0 +1,99 @@
+Open the app/channels/application_cable/connection.rb. We have to add two (2) methods to the Connection class, connect and disconnect. Connect method will run when a connection is attempted.
+
+module ApplicationCable
+class Connection < ActionCable::Connection::Base
+identified_by :current_user
+def connect
+self.current_user = find_current_user
+end
+
+def disconnect
+end
+
+protected
+def find_current_user
+if current_user = User.find_by(id: cookies.signed['user.id']) 
+current_user
+else reject_unauthorized_connection
+end 
+end
+end 
+end
+
+Create a file called config/initializers/warden.rb and add the following to it.
+Warden::Manager.after_set_user do |user, auth, opts| 
+scope = opts[:scope] 
+auth.cookies.signed["#{scope}.id"] = user.id
+end
+
+Warden::Manager.before_logout do |user, auth, opts| 
+scope = opts[:scope] 
+auth.cookies.signed["#{scope}.id"] = nil
+end
+
+Open config/application.rb file and add this below in the "Application" class:
+
+config.action_cable.mount_path = '/cable'
+
+In the config/routes.rb file add this line:
+
+mount ActionCable.server => '/cable'
+
+We are going to create a channel called comments. Run the following command to create it:
+
+rails g channel comments
+
+Open the file app/channels/comments_channel.rb and change the subscribed method to this:
+
+def subscribed 
+stream_from "comments"
+end
+
+In the comments_controller create action, make the following update:
+if @comment.save 
+ActionCable.server.broadcast "comments",
+render(partial: 'comments/comment', object: @comment ) 
+flash[:notice] = "Comment has been created"
+else.........
+
+Create the comment partial used in the controller action for rendering a comment. Create it in the app/views/comments/_comment.html.erb, like below:
+
+<div class="comment-body"> 
+<%= comment.body %>
+</div>
+<div class="comment-time">
+<%= time_ago_in_words(comment.created_at) %>
+ago by <%= comment.user.email %> 
+</div>
+<hr />
+
+Next, change the new comment form so that it looks like below in the show.html.erb:
+
+<%= form_for [@article, @comment ], remote: true,
+:html => {class: "form-horizontal", role: "form"} do |f| %>
+
+Now edit the file app/assets/javascripts/channels/comments.coffee and add
+$("#messages").prepend(data) to the received function like below:
+
+received: (data) ->
+# Called when there's incoming data on the websocket for this channel
+$("#messages").prepend(data)
+
+As a last step, go back to the app/views/articles/show.html.erb file and wrap the code that displays the comments in a div with id "messages", like below:
+
+<div id="messages">
+<% persisted_comments(@comments).each do |comment| %>
+<div class="comment-body"> 
+<%= comment.body %>
+</div>
+<div class="comment-time">
+<%= time_ago_in_words(comment.created_at) %>
+ago by <%= comment.user.email %> 
+</div>
+<hr>
+<% end %>
+</div>
+
+If you are using cloud9, you will need 1 additional update ->
+In your config/environments/development.rb file paste in the following code right before the last end in the file:
+config.action_cable.disable_request_forgery_protection = true
