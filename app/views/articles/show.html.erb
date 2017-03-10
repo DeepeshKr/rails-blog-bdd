@@ -4,10 +4,15 @@
 	<p class="lead"><%= @article.created_at.strftime("%d-%b-%y")%></p>
 	
 	<p><%= @article.body %></p>
-</article>
+
 <div class="edit-delete">
 	<% if user_signed_in? && current_user == @article.user %>
 		<%= link_to "Edit Article", edit_article_path(@article), class:"btn btn-info" %>
 		<%= link_to "Delete Article", article_path(@article), method: :delete, data: {confirm: "Are you sure you want to delete the article"}, class: "btn btn-danger btn-space"%>
 	<% end %>
 </div>
+</article>
+<hr>
+<%= render 'comments/show_comments' %>
+
+<%= render 'comments/new_comment' %>

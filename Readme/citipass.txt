@@ -1,0 +1,2 @@
+Note: Your password to open the e-statement has been changed from 8 to 9 characters.
+For example, if the name in your account is Roopa Lal and the date of birth is 23-12-1976, then your password will be ROOP23DEC or roop23dec

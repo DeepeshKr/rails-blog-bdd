@@ -6,13 +6,14 @@ class ArticlesController < ApplicationController
   end
   
   def show
-   
+    @comment = @article.comments.build
+    @comments = @article.comments
   end
   
   def edit
     unless @article.user == current_user
-      flash[:alert] = "You can only edit your own article."
-      redirect_to root_path
+       flash[:alert] = "You can only edit you own article"
+       redirect_to root_path
     end
   end
   
